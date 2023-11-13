@@ -1,0 +1,62 @@
+spring:
+  datasource:
+    password:
+    username: root
+    url: jdbc:mysql://localhost:3306/crawler2
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+athenahealth:
+  baseUrl: https://api.preview.platform.athenahealth.com
+  authenticationUrl: https://api.preview.platform.athenahealth.com/oauth2/v1/token
+  grantType: client_credentials
+  quota:
+    requestPerSecond: 15
+    requestPerDay: 50000
+  apps:
+    - clientId: 0oalzl9uemN6nTmzL297
+      clientSecret: fVmZHPOPy9slN3c0ZChdlwlSs8SeS4BUenABKYNOUKp3WZa6HSOzs9uFKEPjgmOZ
+    - clientId: 0oalzlb9n9kA8EJAw297
+      clientSecret: SpErUtYKDH-JJd2Xfta3xqY1nTzin1Pa1kJXfdHYZzzEKdf7pLxVCqet61X2XNkX
+    - clientId: 0oalzl9rtwJZ5Dlch297
+      clientSecret: 61wt60z05S1lQo4hIlHcLcCSWOpr5Qk73z9INIr3Db5ZJngzAmtEyxI84HPWQjbk
+    - clientId: 0oalzlbueaaV0Yb1b297
+      clientSecret: dPEFt6D6jy1uYjPPqgHWY50MgMz4NOl3UrHLsutT8LXlW3-s3f1NdyeR5hmbqDNX
+    - clientId: 0oalzl97ux6f4VNzh297
+      clientSecret: XB6NS5KvJhWTcLtNIVN5-4RjxVVk-m1eRAcK_3jXSxSE7HI9DfbPFc4XZaI07sGj
+    - clientId: 0oalzlcxzqtXqSbIR297
+      clientSecret: jX8n2lj9nXtQluMH1BTyChzPpDGkc7on6vs6asjQzC0A8ENvjcldgAwQaXpCdl0G
+    - clientId: 0oalzlbkhxo8apDbt297
+      clientSecret: kKrV_UBGr7T-OPC5Tp3Q6yx9X507uRgBwEoTZ6O27p9f1iDg_HD6Cs1cw2d4iKsG
+    - clientId: 0oalzlb9qvEb9mbVx297
+      clientSecret: 58j21XwURo6MxZ1li-SdP5A6giuyRjSifeBTkLUz-hHA_FC3wpq1HgxeC2Q_8Vkc
+    - clientId: 0oalzleb08pdxx1FJ297
+      clientSecret: vMXxMSjsV7U-e5sww62A3vskAJN8XZ31VW-eOvN7j3IGeYHPkA9J6uKT088gyudI
+    - clientId: 0oalzle39pLQCMfNE297
+      clientSecret: Qn0Zh9iq1Ips_Aqz2Tdx7fcUwKSKdROpCM3ZqpdJbPvy7p5Rnuk6jsvKrPix7lms
+  scopes:
+    - athena/service/Athenanet.MDP.*
+    - system/AllergyIntolerance.read
+    - system/Binary.read
+    - system/CarePlan.read
+    - system/CareTeam.read
+    - system/Condition.read
+    - system/Device.read
+    - system/DiagnosticReport.read
+    - system/DocumentReference.read
+    - system/Encounter.read
+    - system/Goal.read
+    - system/Immunization.read
+    - system/Location.read
+    - system/Medication.read
+    - system/MedicationRequest.read
+    - system/Observation.read
+    - system/Organization.read
+    - system/Patient.read
+    - system/Practitioner.read
+    - system/PractitionerRole.read
+    - system/Procedure.read
+    - system/Provenance.read
+    - system/ServiceRequest.read

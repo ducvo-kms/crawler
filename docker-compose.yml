@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  db:
+    image: mysql/mysql-server
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - "3306:3306"
+  cache:
+    image: redis
+    ports:
+      - "6379:6379"
