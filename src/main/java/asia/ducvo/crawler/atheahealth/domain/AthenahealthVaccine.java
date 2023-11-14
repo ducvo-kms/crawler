@@ -66,7 +66,11 @@ public class AthenahealthVaccine implements Serializable {
   private String approvedBy;
 
   @JsonProperty("cvx")
-  private int cvx;
+  private String cvx;
+
+  private String ndc;
+
+  private String units;
 
   @Id
   @JsonProperty("vaccineid")

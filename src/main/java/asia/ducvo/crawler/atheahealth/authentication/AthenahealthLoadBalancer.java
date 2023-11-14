@@ -49,13 +49,13 @@ public class AthenahealthLoadBalancer {
             .getAndExpire(AthenahealthAuthentication.getKeyCountRequest(lock.getKey()), 1, TimeUnit.DAYS);
 
         if( count != null && Long.parseLong(count) >= requestPerDay){
-          log.info("Ignore candidate: {} over limit per day", lock.getKey());
           continue;
         }
 
         if(lock.getValue().tryAcquire()){
           return new Pair<>(targets.get(lock.getKey()), lock.getValue());
         }
+
       }
     }
   }

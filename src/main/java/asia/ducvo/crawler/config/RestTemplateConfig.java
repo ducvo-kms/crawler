@@ -2,6 +2,8 @@ package asia.ducvo.crawler.config;
 
 import asia.ducvo.crawler.Authentication;
 import asia.ducvo.crawler.atheahealth.config.AthenahealthProperties;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
@@ -19,7 +21,12 @@ public class RestTemplateConfig {
   @Bean
   public RestTemplate restTemplate(RestTemplateBuilder builder,
       ObjectProvider<List<Authentication<?>>> authentications) {
-    RestTemplate restTemplate = new RestTemplate();
+    RestTemplate restTemplate = builder
+        .setConnectTimeout(Duration.of(15, ChronoUnit.MINUTES))
+        .setReadTimeout(Duration.of(15, ChronoUnit.MINUTES))
+        .build();
+
+
 
     if (authentications.getIfAvailable() != null) {
       restTemplate.setInterceptors(

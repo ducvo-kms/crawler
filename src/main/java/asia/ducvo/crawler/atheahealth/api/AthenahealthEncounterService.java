@@ -1,11 +1,12 @@
 package asia.ducvo.crawler.atheahealth.api;
 
 import asia.ducvo.crawler.atheahealth.config.AthenahealthRestTemplate;
-import asia.ducvo.crawler.atheahealth.domain.AthenahealthPatient;
-import asia.ducvo.crawler.atheahealth.domain.PatientSearchResponse;
-import asia.ducvo.crawler.atheahealth.repository.AthenahealthPatientRepository;
-import asia.ducvo.crawler.atheahealth.utils.AthenahealthDateTimeUtils;
-import java.time.LocalDate;
+import asia.ducvo.crawler.atheahealth.domain.AthenahealthDocument;
+import asia.ducvo.crawler.atheahealth.domain.AthenahealthEncounter;
+import asia.ducvo.crawler.atheahealth.domain.DocumentSearchResponse;
+import asia.ducvo.crawler.atheahealth.domain.EncounterSearchResponse;
+import asia.ducvo.crawler.atheahealth.repository.AthenahealthDocumentRepository;
+import asia.ducvo.crawler.atheahealth.repository.AthenahealthEncounterRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -21,35 +22,35 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/atheahealth")
 @AllArgsConstructor
-public class AthenahealthPatientService {
+public class AthenahealthEncounterService {
 
   private final AthenahealthRestTemplate restTemplate;
 
-  private final AthenahealthPatientRepository patientRepository;
+  private final AthenahealthEncounterRepository encounterRepository;
 
-  @GetMapping("/patients")
-  public void patients(String practiceId, LocalDate date) {
+  @GetMapping("/encounters")
+  public void encounters(String practiceId, String patientId, String departmentId) {
     UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance()
-        .pathSegment("v1", practiceId, "patients")
-        .queryParam("dob", AthenahealthDateTimeUtils.formatDate(date));
+        .pathSegment("v1", practiceId, "chart", patientId, "encounters")
+        .queryParam("departmentid", departmentId);
 
-    List<AthenahealthPatient> patients = new ArrayList<>();
+    List<AthenahealthEncounter> vaccines = new ArrayList<>();
 
     String uri = uriBuilder.build(false).toUriString();
     while (true) {
-      ResponseEntity<PatientSearchResponse> response = restTemplate
-          .getForEntity(uri, PatientSearchResponse.class);
-
-      PatientSearchResponse body = response.getBody();
+      ResponseEntity<EncounterSearchResponse> response = restTemplate
+          .getForEntity(uri, EncounterSearchResponse.class);
 
       if(!response.getStatusCode().is2xxSuccessful()){
         log.info("Error: {}", response);
       }
 
+      EncounterSearchResponse body = response.getBody();
+
       log.info("Body: {}", body);
 
       if (body != null) {
-        patients.addAll(body.getPatients().stream()
+        vaccines.addAll(body.getEncounters().stream()
             .peek(i -> i.setPracticeId(practiceId))
             .toList());
       }
@@ -58,13 +59,11 @@ public class AthenahealthPatientService {
         break;
       }
 
-
-
       UriComponents next = UriComponentsBuilder.fromUriString(body.getNext()).build();
       uri = uriBuilder.replaceQueryParam("offset", next.getQueryParams().get("offset")).build(false).toUriString();
     }
 
-    patientRepository.saveAll(patients);
+    encounterRepository.saveAll(vaccines);
 
   }
 }

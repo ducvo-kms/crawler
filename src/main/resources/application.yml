@@ -13,7 +13,7 @@ athenahealth:
   authenticationUrl: https://api.preview.platform.athenahealth.com/oauth2/v1/token
   grantType: client_credentials
   quota:
-    requestPerSecond: 15
+    requestPerSecond: 10
     requestPerDay: 50000
   apps:
     - clientId: 0oalzl9uemN6nTmzL297
