@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AthenahealthPatientRepository extends JpaRepository<AthenahealthPatient, String> {
-  Page<AthenahealthPatient> findByDepartmentIdIsNotNull(Pageable pageable);
+  Page<AthenahealthPatient> findByDepartmentIdIsNotNullOrderByPatientId(Pageable pageable);
 }

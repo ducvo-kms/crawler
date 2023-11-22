@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @AllArgsConstructor
-@Table(name = "athenahealth_document_2")
+@Table(name = "athenahealth_document_4")
 public class AthenahealthDocument {
 
   @Id
@@ -24,11 +24,19 @@ public class AthenahealthDocument {
 
   private String practiceId;
 
+  private String departmentId;
+
   @JsonProperty("adminid")
   private int adminId;
 
   @JsonProperty("patientid")
   private int patientId;
+
+  @JsonProperty("documenttypeid")
+  private String documentTypeId;
+
+  @JsonProperty("internalnote")
+  private String internalNote;
 
   @JsonProperty("documentdescription")
   private String documentDescription;

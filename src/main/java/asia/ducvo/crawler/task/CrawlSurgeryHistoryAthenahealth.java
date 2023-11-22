@@ -1,6 +1,6 @@
 package asia.ducvo.crawler.task;
 
-import asia.ducvo.crawler.atheahealth.api.AthenahealthVaccineService;
+import asia.ducvo.crawler.atheahealth.api.AthenahealthSurgeryHistoryService;
 import asia.ducvo.crawler.atheahealth.domain.AthenahealthPatient;
 import asia.ducvo.crawler.atheahealth.repository.AthenahealthPatientRepository;
 import java.util.concurrent.ExecutorService;
@@ -10,15 +10,16 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-public class CrawlVaccineAthenahealth implements ApplicationListener<ApplicationReadyEvent> {
 
-  private final AthenahealthVaccineService vaccineService;
+public class CrawlSurgeryHistoryAthenahealth implements ApplicationListener<ApplicationReadyEvent> {
+
+  private final AthenahealthSurgeryHistoryService surgeryHistoryService;
 
   private final AthenahealthPatientRepository patientRepository;
   private final ExecutorService executor;
 
-  public CrawlVaccineAthenahealth(AthenahealthVaccineService vaccineService, AthenahealthPatientRepository patientRepository) {
-    this.vaccineService = vaccineService;
+  public CrawlSurgeryHistoryAthenahealth(AthenahealthSurgeryHistoryService surgeryHistoryService, AthenahealthPatientRepository patientRepository) {
+    this.surgeryHistoryService = surgeryHistoryService;
     this.executor = Executors.newFixedThreadPool(100);
     this.patientRepository =patientRepository;
   }
@@ -30,7 +31,7 @@ public class CrawlVaccineAthenahealth implements ApplicationListener<Application
 
     while (true){
       for(AthenahealthPatient patient : page.toList()){
-        executor.submit(() -> vaccineService.vaccines(patient.getPracticeId(), patient.getPatientId(), patient.getDepartmentId()));
+        executor.submit(() -> surgeryHistoryService.procedures(patient.getPracticeId(), patient.getPatientId(), patient.getDepartmentId()));
       }
 
       if(page.hasNext()){
@@ -39,5 +40,7 @@ public class CrawlVaccineAthenahealth implements ApplicationListener<Application
         break;
       }
     }
+
+
   }
 }

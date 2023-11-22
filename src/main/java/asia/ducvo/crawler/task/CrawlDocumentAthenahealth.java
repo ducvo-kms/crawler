@@ -9,8 +9,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
-
 
 public class CrawlDocumentAthenahealth implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -27,7 +25,7 @@ public class CrawlDocumentAthenahealth implements ApplicationListener<Applicatio
 
   @Override
   public void onApplicationEvent(ApplicationReadyEvent event) {
-    Page<AthenahealthPatient> page = patientRepository.findByDepartmentIdIsNotNull(PageRequest.of(0, 100));
+    Page<AthenahealthPatient> page = patientRepository.findByDepartmentIdIsNotNullOrderByPatientId(PageRequest.of(0, 100));
 
 
     while (true){
@@ -36,7 +34,7 @@ public class CrawlDocumentAthenahealth implements ApplicationListener<Applicatio
       }
 
       if(page.hasNext()){
-        page = patientRepository.findByDepartmentIdIsNotNull(page.nextPageable());
+        page = patientRepository.findByDepartmentIdIsNotNullOrderByPatientId(page.nextPageable());
       } else {
         break;
       }

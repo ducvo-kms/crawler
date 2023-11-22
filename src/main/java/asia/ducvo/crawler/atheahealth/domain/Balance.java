@@ -7,11 +7,11 @@ public class Balance {
   private String departmentList;
 
   @JsonProperty("balance")
-  private int balance;
+  private String balance;
 
   @JsonProperty("cleanbalance")
   private boolean cleanBalance;
 
   @JsonProperty("providergroupid")
-  private int providerGroupId;
+  private String providerGroupId;
 }
